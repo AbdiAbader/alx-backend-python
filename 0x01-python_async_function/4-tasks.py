@@ -2,11 +2,11 @@
 """ 4-tasks.py """
 
 import asyncio
-import random
+from typing import List
 
-wait_n = __import__('1-concurrent_coroutines').wait_n
+task_wait_random = __import__('3-tasks').task_wait_random
 
-
-def task_wait_random(n: int, max_delay: int) -> asyncio.Task:
-    """ Returns an asyncio.Task """
-    return asyncio.create_task(wait_n(n, max_delay))
+async def task_wait_n(n: int, max_delay: int) -> List[float]:
+    tasks = [task_wait_random(max_delay) for i in range(n)]
+    delays = await asyncio.gather(*tasks)
+    return sorted(delays)
