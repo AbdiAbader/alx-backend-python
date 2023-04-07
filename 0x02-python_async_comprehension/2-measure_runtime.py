@@ -1,21 +1,14 @@
 #!/usr/bin/env python3
 """ Async Comprehensions """
+
 import asyncio
-from typing import List
-
-import random
-
-async def async_comprehension() -> List[float]:
-    return [random.random() * 10 for _ in range(10)]
+import time
+async_comprehension = __import__('1-async_comprehension').async_comprehension
 
 
-async def measure_runtime() -> float:
-    start_time = asyncio.get_running_loop().time()
-    await asyncio.gather(
-        async_comprehension(),
-        async_comprehension(),
-        async_comprehension(),
-        async_comprehension(),
-    )
-    end_time = asyncio.get_running_loop().time()
-    return end_time - start_time
+async def measure_runtime():
+    """ executes comprehension 4 times in parallel, returns runtime """
+    start = time.perf_counter()
+    await asyncio.gather(*(async_comprehension() for _ in range(4)))
+    stop = time.perf_counter()
+    return stop - start
