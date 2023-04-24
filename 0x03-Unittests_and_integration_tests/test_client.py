@@ -65,14 +65,17 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
     """Test Integration Class for githuborgclient"""
     @classmethod
     def setUpClass(cls):
+        """Set up class"""
         cls.get_patcher = patch('requests.get')
         cls.mock_get = cls.get_patcher.start()
 
     @classmethod
     def tearDownClass(cls):
+        """Tear down class"""
         cls.get_patcher.stop()
 
     def test_public_repos(self):
+        """test publicrepos method"""
         self.mock_get.side_effect = [
             self.org_payload, self.repos_payload
         ]
@@ -82,6 +85,7 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         self.assertListEqual(repos, self.expected_repos)
 
     def test_public_repos_with_license(self):
+        """repos with license methods"""
         self.mock_get.side_effect = [
             self.org_payload, self.repos_payload, self.apache2_repos
         ]
