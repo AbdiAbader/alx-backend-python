@@ -23,7 +23,6 @@ class TestGithubOrgClient(unittest.TestCase):
         client = GithubOrgClient(org_name)
         client.org()
         mock_get.assert_called_once_with(url)
-
     @patch.object(GithubOrgClient, "org", new_callable=PropertyMock)
     @patch('client.get_json')
     def test_public_repos_url(self, mock_org):
@@ -32,7 +31,6 @@ class TestGithubOrgClient(unittest.TestCase):
         mock_org.return_value = {"repos_url": url}
         client = GithubOrgClient("test_org")
         self.assertEqual(client._public_repos_url, url)
-
     @patch('client.get_json')
     def test_public_repos(self, mock_json):
         """Test public repos"""
