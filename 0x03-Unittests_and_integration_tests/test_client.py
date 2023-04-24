@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Test for Client"""
+"""Test for github class Client unit test"""
 
 import unittest
 from unittest import TestCase, mock
@@ -11,7 +11,7 @@ from fixtures import org_payload, repos_payload, expected_repos, apache2_repos
 
 
 class TestGithubOrgClient(unittest.TestCase):
-    """Test Github Class"""
+    """Test Githuborg Class unittest"""
 
     @parameterized.expand([
         ('google',),
@@ -62,7 +62,7 @@ class TestGithubOrgClient(unittest.TestCase):
      'expected_repos': expected_repos, 'apache2_repos': apache2_repos}
 ])
 class TestIntegrationGithubOrgClient(unittest.TestCase):
-    """Test Integration Class"""
+    """Test Integration Class for githuborgclient"""
     @classmethod
     def setUpClass(cls):
         cls.get_patcher = patch('requests.get')
