@@ -73,6 +73,3 @@ class TestMemoize(unittest.TestCase):
             instance = TestClass()
             self.assertEqual(instance.a_property, 42)
             mock_method.assert_called_once()
-
-    
-
