@@ -11,7 +11,7 @@ from fixtures import org_payload, repos_payload, expected_repos, apache2_repos
 
 
 class TestGithubOrgClient(unittest.TestCase):
-    """Test Githuborg Class unittest"""
+    """Test GithubOrgClient class unit test """
 
     @parameterized.expand([
         ('google',),
