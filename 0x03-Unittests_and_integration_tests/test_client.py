@@ -32,16 +32,16 @@ class TestGithubOrgClient(unittest.TestCase):
         client = GithubOrgClient("test_org")
         self.assertEqual(client._public_repos_url, "https://api.github.com/orgs/test_org/repos")
 
-    @mock.patch('client.get_json')
-    @mock.patch.object(GithubOrgClient, '_public_repos_url', new_callable=mock.PropertyMock)
-    def test_public_repos(self, org_name, repo_names, mock_url, mock_get_json):
-        mock_url.return_value = f'https://api.github.com/orgs/{org_name}/repos'
-        mock_get_json.return_value = [
-            {'name': 'chromium', 'license': {'key': 'mit'}},
-        ]
-        client = GithubOrgClient(org_name)
-        repos = client.public_repos('mit')
-        self.assertEqual(repos, repo_names)
-        mock_get_json.assert_called_once()
-    
-    
+    @patch('client.get_json',
+       return_value={'repos_url': 'https://api.github.com/repos/octocat/Hello-World'})
+    def test_public_repos(self, get_json_mock):
+        """Test GithubOrgClient.public_repos"""
+
+        with patch('client.GithubOrgClient._public_repos_url', new_callable=PropertyMock) as repos_url_mock:
+            repos_url_mock.return_value = 'https://api.github.com/repos/octocat/Hello-World'
+            client = GithubOrgClient('example')
+            repos = client.public_repos()
+            get_json_mock.assert_called_once_with('https://api.github.com/repos/octocat/Hello-World')
+            repos_url_mock.assert_called_once()
+            expected_repos = ['Hello-World']
+            self.assertEqual(repos, expected_repos)
