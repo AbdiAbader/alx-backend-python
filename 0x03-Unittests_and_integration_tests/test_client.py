@@ -24,6 +24,7 @@ class TestGithubOrgClient(unittest.TestCase):
         client = GithubOrgClient(org_name)
         client.org()
         mock_get.assert_called_once_with(url)
+
     @patch.object(GithubOrgClient, "org", new_callable=PropertyMock)
     @patch('client.get_json')
     def test_public_repos_url(self, mock_org):
@@ -32,6 +33,7 @@ class TestGithubOrgClient(unittest.TestCase):
         mock_org.return_value = {"repos_url": url}
         client = GithubOrgClient("test_org")
         self.assertEqual(client._public_repos_url, url)
+
     @patch('client.get_json')
     def test_public_repos(self, mock_json):
         """Test public repos"""
@@ -53,6 +55,7 @@ class TestGithubOrgClient(unittest.TestCase):
         """Test has license"""
         client = GithubOrgClient.has_license(repo, license_key)
         self.assertEqual(client.has_license(repo, license_key), expected)
+
 
 @parameterized_class([
     {'org_payload': org_payload, 'repos_payload': repos_payload,
