@@ -50,5 +50,5 @@ class TestGithubOrgClient(unittest.TestCase):
     ])
     def test_has_license(self, repo, license_key, expected):
         """Test has license"""
-        client = GithubOrgClient("test")
-        self.assertEqual(client.has_license(repo, license_key), expected)
+        res = GithubOrgClient.has_license(repo, license_key)
+        self.assertEqual(res, expected)
